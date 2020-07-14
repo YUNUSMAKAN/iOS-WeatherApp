@@ -7,81 +7,244 @@
 //
 
 import Foundation
+import Alamofire
+import SwiftyJSON
 
 class CurrentWeather {
     
-    let temperature: Int?
-    let humidity: Int?
-    let pressure: Int?
-    let windSpeed: Int?
-    let windAngle: Int?
-    let weatherForecast: String?
-    let weatherDescription: String?
+    
+    static let sharedInstance = CurrentWeather()
+    
+      var _cityName: String!
+      var _temperature: Double!
+      var _maxTemperature: Double!
+      var _minTemperature: Double!
+      var _humidity: Int!
+      var _pressure: Int!
+      var _windSpeed: Double!
+      var _windAngle: Double!
+      var _weatherForecast: String!
+      var _weatherDescription: String!
+    
+      var placeLatitude = ""
+      var placeLongitude = ""
     
     
-    struct WeatherKeys {
-        static let temperature = "temp"
-        static let humidity = "humidity"
-        static let pressure = "pressure"
-        static let windSpeed = "speed"
-        static let windAngle = "deg"
-        static let weatherForecast = "main"
-        static let weatherDescription = "description"
+    
+    
+    var cityName : String {
+        if _cityName == nil {
+            _cityName = ""
+        }
+        return _cityName
+
+    }
+    
+    var temperature : Double {
+        if _temperature == nil {
+            _temperature = 0.0
+        }
+        return _temperature
+    }
+    
+    var maxTemperature : Double {
+        if _maxTemperature == nil {
+            _maxTemperature = 0.0
+        }
+        return _maxTemperature
+    }
+    
+    var minTemperature : Double {
+        if _minTemperature == nil {
+            _minTemperature = 0.0
+        }
+        return _minTemperature
+    }
+    
+    var humidity : Int {
+        if _humidity == nil {
+            _humidity = 0
+        }
+        return _humidity
+    }
+
+    var pressure : Int {
+        if _pressure == nil{
+            _pressure = 0
+        }
+        return _pressure
+    }
+    
+    
+    var windSpeed : Double {
+        if _windSpeed == nil {
+            _windSpeed = 0
+        }
+        return _windSpeed
+    }
+    
+    var windAngle : Double {
+        if _windAngle == nil {
+            _windAngle = 0
+        }
+        return _windAngle
+    }
+    
+    var weatherForecast : String {
+        if _weatherForecast == nil {
+            _weatherForecast = ""
+        }
+        return _weatherForecast
+    }
+    
+    
+    var weatherDescription : String {
+        if _weatherDescription == nil{
+        _weatherDescription = ""
+        }
+        return _weatherDescription
+    }
+    
+     init() {
         
     }
     
-   
-    init(weatherDictionary: [String : Any]) {
+    func downloadCurrentWeather(completed: @escaping DownloadComplete){
         
-        temperature = weatherDictionary[WeatherKeys.temperature] as? Int
         
-        if let humidityDouble = weatherDictionary[WeatherKeys.humidity] as? Double {
-            humidity = Int(humidityDouble * 100)
-        }else {
-            humidity = nil
+       Alamofire.request(API1).responseJSON { (response) in
+            let result = response.result
+            let json = JSON(result.value!)
+            self._cityName = json["name"].stringValue
+            self._weatherForecast = json["weather"][0]["main"].stringValue
+            self._weatherDescription = json["weather"][0]["description"].stringValue
+            let downloadedTemp = json["main"]["temp"].double
+            let downloadedMaxTemp = json["main"]["temp_max"].double
+            let downloadedMinTemp = json["main"]["temp_min"].double
+            let downloadedHum = json["main"]["humidity"].int
+            let downloadedPre = json["main"]["pressure"].int
+            let downloadedWindSpeed = json["wind"]["speed"].double
+            let downloadedWindDeg = json["wind"]["deg"].double
+        
+        
+            self._windSpeed = downloadedWindSpeed!
+            self._windAngle = downloadedWindDeg!
+            self._humidity = downloadedHum!
+            self._pressure = downloadedPre!
+            self._temperature = (downloadedTemp! - 273.15).rounded(toPlaces: 0)
+            self._maxTemperature = (downloadedMaxTemp! - 273.15).rounded(toPlaces: 0)
+            self._minTemperature = (downloadedMinTemp! - 273.15).rounded(toPlaces: 0)
+            completed()
+            
         }
-        
-        if let pressureDouble = weatherDictionary[WeatherKeys.pressure] as? Double {
-            pressure = Int(pressureDouble * 100)
-        }else {
-             pressure = nil
-        }
-        
-        if let windSpeedDouble = weatherDictionary[WeatherKeys.windSpeed] as? Double {
-            windSpeed = Int(windSpeedDouble * 100)
-        }else {
-            windSpeed = nil
-        }
-        
-        if let windAngleeDouble = weatherDictionary[WeatherKeys.windAngle] as? Double {
-            windAngle = Int(windAngleeDouble * 100)
-        }else {
-            windAngle = nil
-        }
-        
-        weatherForecast = weatherDictionary[WeatherKeys.weatherForecast] as? String
+        /*
+        Alamofire.request(API2).responseJSON { (response) in
+            let result = response.result
+                let json = JSON(result.value!)
+                self._cityName = json["name"].stringValue
+                self._weatherForecast = json["weather"][0]["main"].stringValue
+                self._weatherDescription = json["weather"][0]["description"].stringValue
+                let downloadedTemp = json["main"]["temp"].double
+                let downloadedMaxTemp = json["main"]["temp_max"].double
+                let downloadedMinTemp = json["main"]["temp_min"].double
+                let downloadedHum = json["main"]["humidity"].int
+                let downloadedPre = json["main"]["pressure"].int
+                let downloadedWindSpeed = json["wind"]["speed"].double
+                let downloadedWindDeg = json["wind"]["deg"].double
          
-        weatherDescription = weatherDictionary[WeatherKeys.weatherDescription] as? String
- 
+         
+                self._windSpeed = downloadedWindSpeed!
+                self._windAngle = downloadedWindDeg!
+                self._humidity = downloadedHum!
+                self._pressure = downloadedPre!
+                self._temperature = (downloadedTemp! - 273.15).rounded(toPlaces: 0)
+                self._maxTemperature = (downloadedMaxTemp! - 273.15).rounded(toPlaces: 0)
+                self._minTemperature = (downloadedMinTemp! - 273.15).rounded(toPlaces: 0)
+                   completed()
+                       
+        }
+        Alamofire.request(API3).responseJSON { (response) in
+            let result = response.result
+            
+                let json = JSON(result.value!)
+                self._cityName = json["name"].stringValue
+                self._weatherForecast = json["weather"][0]["main"].stringValue
+                self._weatherDescription = json["weather"][0]["description"].stringValue
+                let downloadedTemp = json["main"]["temp"].double
+                let downloadedMaxTemp = json["main"]["temp_max"].double
+                let downloadedMinTemp = json["main"]["temp_min"].double
+                let downloadedHum = json["main"]["humidity"].int
+                let downloadedPre = json["main"]["pressure"].int
+                let downloadedWindSpeed = json["wind"]["speed"].double
+                let downloadedWindDeg = json["wind"]["deg"].double
+            
+            
+                self._windSpeed = downloadedWindSpeed!
+                self._windAngle = downloadedWindDeg!
+                self._humidity = downloadedHum!
+                self._pressure = downloadedPre!
+                self._temperature = (downloadedTemp! - 273.15).rounded(toPlaces: 0)
+                self._maxTemperature = (downloadedMaxTemp! - 273.15).rounded(toPlaces: 0)
+                self._minTemperature = (downloadedMinTemp! - 273.15).rounded(toPlaces: 0)
+                completed()
+        }
         
+        
+        Alamofire.request(API4).responseJSON { (response) in
+            let result = response.result
+                
+            let json = JSON(result.value!)
+                self._cityName = json["name"].stringValue
+                self._weatherForecast = json["weather"][0]["main"].stringValue
+                self._weatherDescription = json["weather"][0]["description"].stringValue
+                let downloadedTemp = json["main"]["temp"].double
+                let downloadedMaxTemp = json["main"]["temp_max"].double
+                let downloadedMinTemp = json["main"]["temp_min"].double
+                let downloadedHum = json["main"]["humidity"].int
+                let downloadedPre = json["main"]["pressure"].int
+                let downloadedWindSpeed = json["wind"]["speed"].double
+                let downloadedWindDeg = json["wind"]["deg"].double
+            
+            
+                self._windSpeed = downloadedWindSpeed!
+                self._windAngle = downloadedWindDeg!
+                self._humidity = downloadedHum!
+                self._pressure = downloadedPre!
+                self._temperature = (downloadedTemp! - 273.15).rounded(toPlaces: 0)
+                self._maxTemperature = (downloadedMaxTemp! - 273.15).rounded(toPlaces: 0)
+                self._minTemperature = (downloadedMinTemp! - 273.15).rounded(toPlaces: 0)
+                completed()
+        }
+        
+        
+        
+        Alamofire.request(API5).responseJSON { (response) in
+            let result = response.result
+                
+                let json = JSON(result.value!)
+                self._cityName = json["name"].stringValue
+                self._weatherForecast = json["weather"][0]["main"].stringValue
+                self._weatherDescription = json["weather"][0]["description"].stringValue
+                let downloadedTemp = json["main"]["temp"].double
+                let downloadedMaxTemp = json["main"]["temp_max"].double
+                let downloadedMinTemp = json["main"]["temp_min"].double
+                let downloadedHum = json["main"]["humidity"].int
+                let downloadedPre = json["main"]["pressure"].int
+                let downloadedWindSpeed = json["wind"]["speed"].double
+                let downloadedWindDeg = json["wind"]["deg"].double
+            
+            
+                self._windSpeed = downloadedWindSpeed!
+                self._windAngle = downloadedWindDeg!
+                self._humidity = downloadedHum!
+                self._pressure = downloadedPre!
+                self._temperature = (downloadedTemp! - 273.15).rounded(toPlaces: 0)
+                self._maxTemperature = (downloadedMaxTemp! - 273.15).rounded(toPlaces: 0)
+                self._minTemperature = (downloadedMinTemp! - 273.15).rounded(toPlaces: 0)
+                completed()
+        }*/
+       
     }
-    
-    /*
-        "id":802,
-        "main":"Clouds",
-        "description":"scattered clouds",
-        "icon":"03d"
-        "temp":299.53,
-        "feels_like":295.55,
-        "temp_min":299.15,
-        "temp_max":300.15,
-        "pressure":1016,
-        "humidity":54
-        "speed":8.7,
-        "deg":40
-     */
-    
-    
     
 }
 
