@@ -51,8 +51,8 @@ class MapVC: UIViewController,MKMapViewDelegate,CLLocationManagerDelegate {
         mapView.addAnnotation(annotation2)
         
         let annotation3 = MKPointAnnotation()
-        annotation3.coordinate = CLLocationCoordinate2D(latitude: 39.42417, longitude: 29.98333)
-        annotation3.title = "KUTAHYA"
+        annotation3.coordinate = CLLocationCoordinate2D(latitude: 38.41273, longitude: 27.13838)
+        annotation3.title = "İZMİR"
         annotation1.subtitle = "\(Int(CurrentWeather.sharedInstance.temperature))"
         mapView.addAnnotation(annotation3)
         
@@ -72,6 +72,39 @@ class MapVC: UIViewController,MKMapViewDelegate,CLLocationManagerDelegate {
       
         
     }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        let reuseId = "pin"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView?.canShowCallout = true
+            pinView?.tintColor = UIColor.blue
+            
+            let button = UIButton(type: UIButton.ButtonType.detailDisclosure)
+            pinView?.rightCalloutAccessoryView = button
+            
+        }else {
+            pinView?.annotation = annotation
+        }
+        return pinView
+    }
+    
+    
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+       performSegue(withIdentifier: "toDetailsVC", sender: nil)
+                
+    }
+    
+    
     
     @objc func addClicked(){
         performSegue(withIdentifier: "toDetailsVC", sender: nil)
