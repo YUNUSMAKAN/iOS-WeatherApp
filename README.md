@@ -6,7 +6,7 @@
 * VIEW
 * These display UI elements on the screen. These are usually classes that subclass UIView and use UIKit.
 * VIEW MODELS
-*These classes are where you take the information from the model classes and transform them into values that can be displayed in a particular view.
+* These classes are where you take the information from the model classes and transform them into values that can be displayed in a particular view.
 
 ![mvvm](https://user-images.githubusercontent.com/58694754/87852677-b3b51100-c90c-11ea-8aca-f3be311be20c.png)
 
