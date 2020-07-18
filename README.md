@@ -2,13 +2,13 @@
 # What is MVVM Pattern?
 * The purpose of this post is to provide an introduction to the Model-View-ViewModel (MVVM) pattern. While I’ve participated in lots of discussions online about MVVM, it occurred to me that beginners who are learning the pattern have very little to go on and a lot of conflicting resources to wade through in order to try to implement it in their own code. I am not trying to introduce dogma but wanted to pull together key concepts in a single post to make it easy and straightforward to understand the value of the pattern and how it can be implemented. MVVM is really far simpler than people make it out to be.
 * MODEL
-These hold the app data. These are the structs and classes that you have created to hold the data you receive from a REST API or from some other data source.
+* These hold the app data. These are the structs and classes that you have created to hold the data you receive from a REST API or from some other data source.
 * VIEW
-These display UI elements on the screen. These are usually classes that subclass UIView and use UIKit.
+* These display UI elements on the screen. These are usually classes that subclass UIView and use UIKit.
 * VIEW MODELS
-These classes are where you take the information from the model classes and transform them into values that can be displayed in a particular view.
+*These classes are where you take the information from the model classes and transform them into values that can be displayed in a particular view.
 
-
+![mvvm](https://user-images.githubusercontent.com/58694754/87852677-b3b51100-c90c-11ea-8aca-f3be311be20c.png)
 
 
 
