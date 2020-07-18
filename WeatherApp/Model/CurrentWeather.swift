@@ -137,7 +137,7 @@ class CurrentWeather {
             completed()
             
         }
-        /*
+        
         Alamofire.request(API2).responseJSON { (response) in
             let result = response.result
                 let json = JSON(result.value!)
@@ -242,7 +242,7 @@ class CurrentWeather {
                 self._maxTemperature = (downloadedMaxTemp! - 273.15).rounded(toPlaces: 0)
                 self._minTemperature = (downloadedMinTemp! - 273.15).rounded(toPlaces: 0)
                 completed()
-        }*/
+        }
        
     }
     

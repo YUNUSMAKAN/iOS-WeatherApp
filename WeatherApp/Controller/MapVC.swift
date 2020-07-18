@@ -33,48 +33,56 @@ class MapVC: UIViewController,MKMapViewDelegate,CLLocationManagerDelegate {
         
        /* currentWeather = CurrentWeather()
         currentWeather.downloadCurrentWeather {
-            print("Data Downloaded")
         }*/
+        
+        
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(addClicked))
         
+        let annotation1 = MKPointAnnotation()
+        annotation1.coordinate = CLLocationCoordinate2D(latitude: 41.01384, longitude: 28.94966)
+        annotation1.title = "İSTANBUL"
+        annotation1.subtitle = "\(Int(CurrentWeather.sharedInstance.temperature))"
+        mapView.addAnnotation(annotation1)
         
-        let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(chooseLocation(gestureRecognizer:)))
-        recognizer.minimumPressDuration = 1
-        mapView.addGestureRecognizer(recognizer)
+        let annotation2 = MKPointAnnotation()
+        annotation2.coordinate = CLLocationCoordinate2D(latitude: 39.91987, longitude: 32.85427)
+        annotation2.title = "ANKARA"
+        annotation1.subtitle = "\(Int(CurrentWeather.sharedInstance.temperature))"
+        mapView.addAnnotation(annotation2)
+        
+        let annotation3 = MKPointAnnotation()
+        annotation3.coordinate = CLLocationCoordinate2D(latitude: 39.42417, longitude: 29.98333)
+        annotation3.title = "KUTAHYA"
+        annotation1.subtitle = "\(Int(CurrentWeather.sharedInstance.temperature))"
+        mapView.addAnnotation(annotation3)
+        
+        let annotation4 = MKPointAnnotation()
+        annotation4.coordinate = CLLocationCoordinate2D(latitude: 37.87135, longitude: 32.48464)
+        annotation4.title = "KONYA"
+        annotation1.subtitle = "\(Int(CurrentWeather.sharedInstance.temperature))"
+        mapView.addAnnotation(annotation4)
+        
+        let annotation5 = MKPointAnnotation()
+        annotation5.coordinate = CLLocationCoordinate2D(latitude: 36.90812, longitude: 30.69556)
+        annotation5.title = "ANTALYA"
+        annotation1.subtitle = "\(Int(CurrentWeather.sharedInstance.temperature))"
+        mapView.addAnnotation(annotation5)
+        
+        
+      
         
     }
     
     @objc func addClicked(){
+        performSegue(withIdentifier: "toDetailsVC", sender: nil)
         
     }
     
-    @objc func chooseLocation(gestureRecognizer: UIGestureRecognizer ) {
-        
-        if gestureRecognizer.state == .began {
+  
+           
+    //CurrentWeather.sharedInstance.placeLatitude = String(coordinates.latitude)
+    //CurrentWeather.sharedInstance.placeLongitude = String(coordinates.longitude)
             
-            let touchedPoint = gestureRecognizer.location(in: self.mapView)
-            let coordinates = self.mapView.convert(touchedPoint, toCoordinateFrom: self.mapView)
-        
-            //Pin
-            
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinates
-            annotation.title = "Istanbul"
-            //annotation.subtitle = "\(Int(CurrentWeather.sharedInstance.temperature))"
-            
-           // annotation.title = CurrentWeather.sharedInstance.cityName
-            //annotation.subtitle = CurrentWeather.sharedInstance.temperature
-        
-            self.mapView.addAnnotation(annotation)
-            
-            //CurrentWeather.sharedInstance.placeLatitude = String(coordinates.latitude)
-            //CurrentWeather.sharedInstance.placeLongitude = String(coordinates.longitude)
-            
-            
-        }
-        
-        
-    }
 
 
    /* func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -98,9 +106,6 @@ class MapVC: UIViewController,MKMapViewDelegate,CLLocationManagerDelegate {
         
     }*/
 
-    
-    
-    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
