@@ -80,13 +80,12 @@
 		6C3B26BB24BA240D005FF2D4 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				6C55435C24BB4A8C00530982 /* Extentions */,
-				6C55435924BB49D900530982 /* Extras */,
+				6C55435C24BB4A8C00530982 /* Extension */,
+				6C55435924BB49D900530982 /* Service */,
 				6C55435824BB418700530982 /* View */,
 				6C55435724BB417F00530982 /* Model */,
-				6C55435624BB414A00530982 /* Controller */,
-				6C3B26BC24BA240D005FF2D4 /* AppDelegate.swift */,
-				6C3B26BE24BA240D005FF2D4 /* SceneDelegate.swift */,
+				6C46E6D824C31E2B001BB16C /* ViewModel */,
+				6C3B26C224BA240D005FF2D4 /* Main.storyboard */,
 				6C3B26C524BA240E005FF2D4 /* Assets.xcassets */,
 				6C3B26C724BA240E005FF2D4 /* LaunchScreen.storyboard */,
 				6C3B26CA24BA240E005FF2D4 /* Info.plist */,
@@ -94,13 +93,11 @@
 			path = WeatherApp;
 			sourceTree = "<group>";
 		};
-		6C55435624BB414A00530982 /* Controller */ = {
+		6C46E6D824C31E2B001BB16C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				6C3B26C024BA240D005FF2D4 /* MapVC.swift */,
-				6C3B26D024BA244F005FF2D4 /* DetailsVC.swift */,
 			);
-			path = Controller;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		6C55435724BB417F00530982 /* Model */ = {
@@ -114,25 +111,28 @@
 		6C55435824BB418700530982 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6C3B26C224BA240D005FF2D4 /* Main.storyboard */,
+				6C3B26C024BA240D005FF2D4 /* MapVC.swift */,
+				6C3B26D024BA244F005FF2D4 /* DetailsVC.swift */,
+				6C3B26BC24BA240D005FF2D4 /* AppDelegate.swift */,
+				6C3B26BE24BA240D005FF2D4 /* SceneDelegate.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		6C55435924BB49D900530982 /* Extras */ = {
+		6C55435924BB49D900530982 /* Service */ = {
 			isa = PBXGroup;
 			children = (
 				6C55435A24BB49FA00530982 /* Extras.swift */,
 			);
-			path = Extras;
+			path = Service;
 			sourceTree = "<group>";
 		};
-		6C55435C24BB4A8C00530982 /* Extentions */ = {
+		6C55435C24BB4A8C00530982 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				6C4722E024BB89EA003B44A1 /* Extensions.swift */,
 			);
-			path = Extentions;
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		83E5A067ACA58910B794B0E3 /* Frameworks */ = {
