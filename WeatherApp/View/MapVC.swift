@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
-import CoreData
+
 
 
 class MapVC: UIViewController,MKMapViewDelegate,CLLocationManagerDelegate {
